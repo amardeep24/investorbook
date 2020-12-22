@@ -20,7 +20,7 @@ export default (props) => {
                 columns={[
                     {
                         title: "Name", field: "name", render: rowData => <Link to={`/investor/${rowData.id}`}>
-                            <img src={rowData.photo_thumbnail} />
+                            <img src={rowData.photo_thumbnail} alt={rowData.name}/>
                             {rowData.name}
                         </Link>
                     },

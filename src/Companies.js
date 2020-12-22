@@ -3,7 +3,7 @@ import { useQuery, gql } from '@apollo/client';
 
 import Error from "./Error";
 import CompanyTable from "./CompanyTable";
-import { PinDropSharp } from '@material-ui/icons';
+
 
 const GET_COMPANIES = gql`
     query Get_Companies {

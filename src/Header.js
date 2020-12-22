@@ -9,7 +9,7 @@ export default () => {
     `
     return (
         <Header>
-           <img src={logo}/>
+           <img src={logo} alt={"InvestorBook"}/>
         </Header>
     )
 }

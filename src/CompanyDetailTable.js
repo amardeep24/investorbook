@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import MaterialTable from "material-table";
 import Edit from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/Delete';
@@ -17,7 +17,6 @@ const colData = [
 ];
 
 export default (props) => {
-    const [open, setOpen] = useState(false);
     return (
         <>
             <MaterialTable
@@ -37,18 +36,18 @@ export default (props) => {
                     {
                         icon: () => <Edit />,
                         tooltip: 'Edit',
-                        onClick: (event, rowData) => alert("You saved " + rowData.name)
+                        onClick: (event, rowData) => console.log(rowData.name)
                     },
                     {
                         icon: () => <Delete />,
                         tooltip: 'Delete',
-                        onClick: (event, rowData) => alert("You want to delete " + rowData.name)
+                        onClick: (event, rowData) =>  console.log(rowData.name)
                     },
                     {
                         icon: () => <AddBox />,
                         tooltip: 'Add Investment',
                         isFreeAction: true,
-                        onClick: (event) => setOpen(true)
+                        onClick: (event) =>  console.log(event)
                     }
                 ]}
                 title="Investors">

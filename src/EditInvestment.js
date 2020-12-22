@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,18 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default (props) => {
-    const [company, setCompany] = useState("");
-    const [investment, setInvestment] = useState(0);
-    const { name, amount } = props.investment || {};
-
-    useEffect(() => {
-        if (name !== company) {
-            setCompany(name);
-        }
-        if (investment !== amount) {
-            setInvestment(amount);
-        }
-    }, [name, amount]);
+    const [investment, setInvestment] = useState(props.investment);
 
     return (
         <div>
@@ -36,7 +25,7 @@ export default (props) => {
                         label="Select Company"
                         type="text"
                         fullWidth
-                        value={company}
+                        value={props.company}
                         disabled
                     />
                     <TextField
@@ -53,7 +42,7 @@ export default (props) => {
                     <Button onClick={props.onClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={() => props.onSubmit({ id: props.investment.id, name: company, amount: investment })} variant="contained" color="primary">
+                    <Button onClick={() => props.onSubmit({ id: props.id, name: props.company, amount: investment })} variant="contained" color="primary">
                         Save Company
                     </Button>
                 </DialogActions>

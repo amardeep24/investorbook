@@ -3,7 +3,6 @@ import MaterialTable from "material-table";
 import Edit from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/Delete';
 import AddBox from '@material-ui/icons/AddBox';
-import IconButton from '@material-ui/core/IconButton';
 import { useMutation, gql } from '@apollo/client';
 import { tableIcons } from "./Icons";
 
@@ -60,7 +59,7 @@ export default (props) => {
     const [newInvestment, setNewInvestment] = useState(null);
     const [updatedInvestment, setUpdatedInvestment] = useState(null);
 
-    const [addInvestment, { data }] = useMutation(ADD_INVESTMENT, {
+    const [addInvestment] = useMutation(ADD_INVESTMENT, {
         refetchQueries: [
             { query: GET_INVESTOR, variables: { id: props.investor } }
         ]
@@ -88,33 +87,33 @@ export default (props) => {
                 }
             });
         }
-    }, [newInvestment]);
+    }, [newInvestment, addInvestment,props.investor]);
 
     useEffect(() => {
-        if(updatedInvestment){
+        if (updatedInvestment) {
             editInvestment({
-                variables:{
+                variables: {
                     id: updatedInvestment.id,
                     amount: updatedInvestment.amount
                 }
             });
         }
-    }, [updatedInvestment]);
+    }, [updatedInvestment, editInvestment]);
 
     const handleAddInvestmentClose = useCallback(() => {
         setIsAddInvestmentOpen(false);
-    });
+    }, [setIsAddInvestmentOpen]);
     const handleEditInvestmentClose = useCallback(() => {
         setIsEditInvestmentOpen(false);
-    });
+    }, [setIsEditInvestmentOpen]);
     const handleAddInvestmentSubmit = useCallback((investment) => {
         setIsAddInvestmentOpen(false);
         setNewInvestment(investment);
-    });
+    }, [setIsAddInvestmentOpen, setNewInvestment]);
     const handleEditInvestmentSubmit = useCallback((investment) => {
         setIsEditInvestmentOpen(false);
         setUpdatedInvestment(investment);
-    });
+    }, [setIsEditInvestmentOpen, setUpdatedInvestment]);
     return (
         <>
             <MaterialTable
@@ -136,7 +135,7 @@ export default (props) => {
                         tooltip: 'Edit',
                         onClick: (event, rowData) => {
                             setIsEditInvestmentOpen(true);
-                            console.log( rowData.id)
+                            console.log(rowData.id)
                             setUpdatedInvestment({
                                 id: rowData.id,
                                 name: rowData.name,
@@ -162,11 +161,13 @@ export default (props) => {
                 open={isAddInvestmentOpen}
                 onClose={handleAddInvestmentClose}
                 onSubmit={handleAddInvestmentSubmit} />
-            <EditInvestment
+            {updatedInvestment && <EditInvestment
                 open={isEditInvestmentOpen}
-                investment={updatedInvestment}
+                id={updatedInvestment.id}
+                company={updatedInvestment.name}
+                investment={updatedInvestment.amount}
                 onClose={handleEditInvestmentClose}
-                onSubmit={handleEditInvestmentSubmit} />
+                onSubmit={handleEditInvestmentSubmit} />}
         </>
     )
 
