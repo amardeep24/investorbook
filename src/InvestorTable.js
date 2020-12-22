@@ -1,26 +1,28 @@
 import React, { } from "react";
 import MaterialTable from "material-table";
 import styled from "styled-components";
+import {Link} from "react-router-dom";
 
 import { tableIcons } from "./Icons";
 
+const TableContainer = styled.div`
+max-width: 100%
+`;
+const WrappedRow = styled.div`
+word-break: break-all;
+`
+
 export default (props) => {
-    const TableContainer = styled.div`
-        max-width: 100%
-    `;
-    const WrappedRow = styled.div`
-        word-break: break-all;
-    `
     return (
         <TableContainer>
             <MaterialTable
                 icons={tableIcons}
                 columns={[
                     {
-                        title: "Name", field: "name", render: rowData => <div>
+                        title: "Name", field: "name", render: rowData => <Link to={`/investor/${rowData.id}`}>
                             <img src={rowData.photo_thumbnail} />
                             {rowData.name}
-                        </div>
+                        </Link>
                     },
                     {
                         title: "Investments", field: "investments", render: rowData =>
@@ -30,7 +32,6 @@ export default (props) => {
                     },
                 ]}
                 data={props.tableData}
-                onRowClick={row => props.showInvestmentDetail(row)}
                 options={{
                     rowStyle: {
                         fontSize: '12px',

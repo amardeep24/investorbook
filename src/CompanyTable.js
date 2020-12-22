@@ -5,19 +5,20 @@ import {Link} from "react-router-dom";
 
 import { tableIcons } from "./Icons";
 
+const TableContainer = styled.div`
+max-width: 100%
+`;
+const WrappedRow = styled.div`
+word-break: break-all;
+`
+const RowItem = styled(Link)`
+text-decoration: none;
+&:focus, &:hover, &:visited, &:link, &:active {
+text-decoration: none;
+}
+`
+
 export default (props) => {
-    const TableContainer = styled.div`
-        max-width: 100%
-    `;
-    const WrappedRow = styled.div`
-        word-break: break-all;
-    `
-    const RowItem = styled(Link)`
-    text-decoration: none;
-    &:focus, &:hover, &:visited, &:link, &:active {
-        text-decoration: none;
-    }
-    `
     return (
         <TableContainer>
             <MaterialTable

@@ -4,7 +4,6 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import { useCallback } from 'react';
 
 import './App.css';
 import Investors from './Investors';
@@ -12,6 +11,7 @@ import Companies from "./Companies";
 import Header from "./Header";
 import Dashboard from "./Dashboard";
 import Company from './Company';
+import Investor from './Investor';
 
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
             <Dashboard tabs={tabs} render={() => <Companies />} />
           </Route>
           <Route path="/investor/:id">
-            <Company />
+            <Investor />
           </Route>
           <Route path="/company/:id">
             <Company />

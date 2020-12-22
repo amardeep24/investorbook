@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const Tabs = styled.ul`
-        margin:0;
+        margin:0 0 0 10px;
         padding: 0;
         text-align: left;
         list-style-type: none;
@@ -20,6 +20,8 @@ const HorizontalRule = styled.hr`
     `;
 const MenuItem = styled(Link)`
     text-decoration: none;
+    font-weight: bold;
+    color: ${props => props.isSelected ? "black" : "#adadad"};
     &:focus, &:hover, &:visited, &:link, &:active {
         text-decoration: none;
     }
@@ -34,7 +36,11 @@ export default (props) => {
                         isSelected={i === selectedTab}
                         key={tab.name}
                         onClick={() => setSelectedTab(i)}>
-                        <MenuItem to={tab.link}>{tab.name}</MenuItem>
+                        <MenuItem
+                            to={tab.link}
+                            isSelected={i === selectedTab}>
+                            {tab.name}
+                        </MenuItem>
                     </View>)
                 }
             </Tabs>

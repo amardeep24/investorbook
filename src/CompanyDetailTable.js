@@ -1,27 +1,25 @@
-import React from "react";
+import React, {useState} from "react";
 import MaterialTable from "material-table";
-import { formatCurrency } from "./utils";
+import Edit from '@material-ui/icons/Edit';
+import Delete from '@material-ui/icons/Delete';
+import AddBox from '@material-ui/icons/AddBox';
 
+import { formatCurrency } from "./utils";
 import { tableIcons } from "./Icons";
-import IconButton from '@material-ui/core/IconButton';
-import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
-import { styled } from "@material-ui/core";
-import { Link } from "react-router-dom";
+
+const colData = [
+    {
+        title: "Name", field: "investor"
+    },
+    {
+        title: "Amount", field: "amount", render: rowData => <div>{formatCurrency(rowData.amount)}</div>
+    }
+];
 
 export default (props) => {
-    const colData = [
-        {
-            title: "Name", field: "investor"
-        },
-        {
-            title: "Amount", field: "amount", render: rowData => <div>{formatCurrency(rowData.amount)}</div>
-        }
-    ];
+    const [open, setOpen] = useState(false);
     return (
         <>
-            <IconButton aria-label="back">
-                <Link to="/companies"><ArrowBackIos /></Link>
-            </IconButton>
             <MaterialTable
                 icons={tableIcons}
                 columns={colData}
@@ -30,8 +28,29 @@ export default (props) => {
                     rowStyle: {
                         fontSize: '12px',
                     },
-                    pageSize: 10
+                    pageSize: 10,
+                    search: false,
+                    actionsColumnIndex: -1,
+                    toolbarButtonAlignment: "left"
                 }}
+                actions={[
+                    {
+                        icon: () => <Edit />,
+                        tooltip: 'Edit',
+                        onClick: (event, rowData) => alert("You saved " + rowData.name)
+                    },
+                    {
+                        icon: () => <Delete />,
+                        tooltip: 'Delete',
+                        onClick: (event, rowData) => alert("You want to delete " + rowData.name)
+                    },
+                    {
+                        icon: () => <AddBox />,
+                        tooltip: 'Add Investment',
+                        isFreeAction: true,
+                        onClick: (event) => setOpen(true)
+                    }
+                ]}
                 title="Investors">
             </MaterialTable>
         </>

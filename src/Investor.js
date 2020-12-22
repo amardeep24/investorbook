@@ -1,11 +1,11 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
-import styled from "styled-components";
+import { useParams } from "react-router-dom";
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-import CompanyDetailTable from "./CompanyDetailTable";
+import InvestorDetailTable from "./InvestorDetailTable";
 import Error from "./Error";
 
 const ViewContainer = styled.div`
@@ -17,39 +17,42 @@ const TableContainer = styled.div`
 const BackButton = styled(Link)`
     padding: 0 10px 0 10px;
 `;
-const GET_COMPANY = gql`
-    query Get_Company_By_Pk($id: Int!) {
-        company_by_pk(id: $id) {   
+
+export const GET_INVESTOR = gql`
+    query Get_Companies($id: Int!) {
+        investor_by_pk(id: $id) {
             investments {
+                id
                 amount
-                investor {
+                company {
                     name
                 }
             }
         }
     }
-`;
-export default () => {
+`
+
+export default (props) => {
     const { id } = useParams();
-    const { data, loading, error } = useQuery(GET_COMPANY, {
+    const { data, loading, error } = useQuery(GET_INVESTOR, {
         variables: {
             id
         }
     });
     if (error) return <Error />
     if (loading) return <p>Loading...</p>;
-    const tableData = data.company_by_pk.investments.map(investment => {
+    const tableData = data.investor_by_pk.investments.map(investment => {
         return {
-            investor: investment.investor.name,
-            amount: investment.amount
+            id: investment.id,
+            amount: investment.amount,
+            name: investment.company.name
         }
     });
     return (
         <ViewContainer>
-            <BackButton to="/companies"><ArrowBackIos /></BackButton>
+            <BackButton to="/investments"><ArrowBackIos /></BackButton>
             <TableContainer>
-                <CompanyDetailTable tableData={tableData} />
+                <InvestorDetailTable investor={id} tableData={tableData} />
             </TableContainer>
-        </ViewContainer>
-    )
+        </ViewContainer>);
 }
