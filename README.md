@@ -40,3 +40,16 @@ heroku git:remote -a {your_app_name}
 heroku buildpacks:set marks/create-react-app
 git push heroku master
 ```
+# Developer notes
+
+## Implementation Notes 
+ - Implememnted CRUD aspect of the app with implementations of Add, Edit and Delete Mutations using Apollo client's useMutation
+ - Implemented GraphQL Queries using Apollo Cilent's useQuery
+ - Used React Hooks to build this app
+ - Used 3rd party libs like React Router, Material - UI, Styled Components to implement UI.
+
+## Things to be done
+ - Used refetch queries, should have updated cache instead.
+ - Left out the functionality to implement add, edit and delete investors
+ - Left out test cases
+ - UI should have been more polished and bug free. 
